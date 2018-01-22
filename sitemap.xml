@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://yewennuan.github.io/about/index.html</loc>
+    
+    <lastmod>2018-01-22T15:27:13.767Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://yewennuan.github.io/categories/index.html</loc>
     
     <lastmod>2018-01-22T13:38:30.568Z</lastmod>
@@ -19,13 +26,6 @@
     <loc>https://yewennuan.github.io/2018/01/20/hello-world/</loc>
     
     <lastmod>2018-01-20T09:01:51.533Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://yewennuan.github.io/2018/01/18/firstblog/</loc>
-    
-    <lastmod>2018-01-18T14:00:00.000Z</lastmod>
     
   </url>
   
