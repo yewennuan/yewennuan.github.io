@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title><![CDATA[Hello World]]></title>
-    <url>%2F2018%2F01%2F20%2Fhello-world%2F</url>
-    <content type="text"><![CDATA[Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick StartCreate a new post1$ hexo new "My New Post" More info: Writing Run server1$ hexo server More info: Server Generate static files1$ hexo generate More info: Generating Deploy to remote sites1$ hexo deploy More info: Deployment]]></content>
+    <title><![CDATA[NIFI-安装]]></title>
+    <url>%2F2018%2F02%2F16%2Fnifi-1%2F</url>
+    <content type="text"><![CDATA[NIFI网上的中文资料是真的少。特别是用docker启动NIFI。记录下来，当传家宝=v = 安装NIFImacOS没有 brew 的先安装brew1$ brew install nifi 通过brew安装完之后12$ cd /usr/local/Cellar/nifi/1.5.0/bin$ sudo nifi start 注意，上述路径有可能和作者不一样。因为对应的nifi版本不一样！！！ Linux官网下载,下完之后找到工程目录 bin 然后 1$ sudo nifi start 附加牢骚(我懒得试0v0,就试了用docker启动ubuntu16.04,然后不行)： debian 系的可以试试看： 1$ sudo apt-get install nifi centOS 可以试试: 1$ sudo yum install nifi 以上安装方法默认 java环境已经安装好 并且是jdk1.8或以上。 docker容器大爱，只需要有docker环境就好了,非常方便，推荐使用docker安装12$ docker pull apache/nifi:1.5.0$ docker run --name nifi -p 8080:8080 -d apache/nifi:1.5.0 启动成功会显示该新建容器的id(这个id每个人都是不一样的):1$ c78fabb5d1eb99be5de736499f3c833e6e7a6d0608ef4457ee348887e22a35ce 关闭容器后，想第二次启动该容器,不应该重复上述的docker run命令，否则会报如下错误:123$ docker run --name nifi -p 8080:8080 -d apache/nifi:1.5.0$ docker: Error response from daemon: Conflict. The container name "/nifi" is already in use by container "c78fabb5d1eb99be5de736499f3c833e6e7a6d0608ef4457ee348887e22a35ce". You have to remove (or rename) that container to be able to reuse that name. See 'docker run --help'. 应根据名字或者id来启动，名称即 –name 后面的参数，这里是nifi，所以命令如下:1$ docker start nifi 启动 docker 容器命令后面也可以加个 –rm,即1$ docker run --rm --name nifi -p 8080:8080 -d apache/nifi:1.5.0 这个参数是说容器退出后随之将其删除。这样你每次起的都是一个全新的镜像。 搞定收工]]></content>
   </entry>
 </search>
