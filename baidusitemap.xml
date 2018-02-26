@@ -4,12 +4,32 @@
 
     
   <url>
-    <loc>http://yewennuan.com/2018/02/20/hexo-next-1/</loc>
-    <lastmod>2018-02-20T14:17:15.365Z</lastmod>
+    <loc>http://yewennuan.com/2018/02/26/nifi-1/</loc>
+    <lastmod>2018-02-26T11:42:11.141Z</lastmod>
+    <data>
+        <display>
+        <title>NIFI-安装</title>
+        <pubTime>2018-02-26T11:42:11.141Z</pubTime>
+        
+        <tag>NIFI</tag>
+         
+         
+           
+             
+              <breadCrumb title="NIFI" url="http://yewennuan.com/categories/NIFI/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://yewennuan.com/2018/02/26/hexo-next-1/</loc>
+    <lastmod>2018-02-26T11:42:05.648Z</lastmod>
     <data>
         <display>
         <title>Hexo Next折腾记录</title>
-        <pubTime>2018-02-20T14:17:15.365Z</pubTime>
+        <pubTime>2018-02-26T11:42:05.648Z</pubTime>
         
         <tag>Hexo</tag>
          
@@ -17,46 +37,6 @@
            
              
               <breadCrumb title="Hexo" url="http://yewennuan.com/categories/Hexo/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://yewennuan.com/2018/02/19/nifi-2/</loc>
-    <lastmod>2018-02-19T15:40:57.818Z</lastmod>
-    <data>
-        <display>
-        <title>NIFI-举个例子入门啦</title>
-        <pubTime>2018-02-19T15:40:57.818Z</pubTime>
-        
-        <tag>NIFI</tag>
-         
-         
-           
-             
-              <breadCrumb title="NIFI" url="http://yewennuan.com/categories/NIFI/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://yewennuan.com/2018/02/19/nifi-1/</loc>
-    <lastmod>2018-02-19T15:40:57.812Z</lastmod>
-    <data>
-        <display>
-        <title>NIFI-安装</title>
-        <pubTime>2018-02-19T15:40:57.812Z</pubTime>
-        
-        <tag>NIFI</tag>
-         
-         
-           
-             
-              <breadCrumb title="NIFI" url="http://yewennuan.com/categories/NIFI/"/>
           
         </display>
     </data>
