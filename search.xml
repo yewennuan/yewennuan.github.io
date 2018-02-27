@@ -2,13 +2,24 @@
 <search>
   <entry>
     <title><![CDATA[NIFI-安装]]></title>
-    <url>%2F2018%2F02%2F26%2Fnifi-1%2F</url>
+    <url>%2F2018%2F02%2F28%2Fnifi-1%2F</url>
     <content type="text"><![CDATA[NIFI网上的中文资料是真的少。特别是用docker启动NIFI。记录下来，当传家宝=v = 安装NIFImacOS没有 brew 的先安装brew1$ brew install nifi 通过brew安装完之后12$ cd /usr/local/Cellar/nifi/1.5.0/bin$ sudo nifi start 注意，上述路径有可能和作者不一样。因为对应的nifi版本不一样！！！ Linux官网下载,下完之后找到工程目录 bin 然后 1$ sudo nifi start 附加牢骚(我懒得试0v0,就试了用docker启动ubuntu16.04,然后不行)： Ubuntu / Debian 系的可以试试看： 1$ sudo apt-get install nifi Centos / Redhat 可以试试: 1$ sudo yum install nifi 以上安装方法默认 java环境已经安装好 并且是jdk1.8或以上。 docker容器大爱，只需要有docker环境就好了,非常方便，推荐使用docker安装12$ docker pull apache/nifi:1.5.0$ docker run --name nifi -p 8080:8080 -d apache/nifi:1.5.0 启动成功会显示该新建容器的id(这个id每个人都是不一样的):1$ c78fabb5d1eb99be5de736499f3c833e6e7a6d0608ef4457ee348887e22a35ce 关闭容器后，想第二次启动该容器,不应该重复上述的docker run命令，否则会报如下错误:123$ docker run --name nifi -p 8080:8080 -d apache/nifi:1.5.0$ docker: Error response from daemon: Conflict. The container name "/nifi" is already in use by container "c78fabb5d1eb99be5de736499f3c833e6e7a6d0608ef4457ee348887e22a35ce". You have to remove (or rename) that container to be able to reuse that name. See 'docker run --help'. 应根据名字或者id来启动，名称即 –name 后面的参数，这里是nifi，所以命令如下:1$ docker start nifi 启动 docker 容器命令后面也可以加个 –rm,即1$ docker run --rm --name nifi -p 8080:8080 -d apache/nifi:1.5.0 这个参数是说容器退出后随之将其删除。这样你每次起的都是一个全新的镜像。 搞定收工]]></content>
       <categories>
         <category>NIFI</category>
       </categories>
       <tags>
         <tag>NIFI</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[JAVA知识点整理]]></title>
+    <url>%2F2018%2F02%2F28%2F%E9%9B%86%E5%90%88%2F</url>
+    <content type="text"><![CDATA[###集合 List ArrayList 有3中构造函数。无参则elementData = {};有int参则负数报错，非负数初始化相应大小数组;Collection&lt;? extends E&gt; c入参的，直接elementData = c.toArray(); Integer.MAX_VALUE+1 返回的是最大的负数而不是最小的负数。所以c= Integer.MAX_VALUE+1 ,c= c-2,最终c为正数 负数向右移,不管移多少位始终都是负数 add和addAll方法会判断elementData这个数组容器是否为空，为空则初始化，如果是add则值为默认的10，如果是addAll方法，则选入参 size和10较大的一个值 add(E e)方法 如果未初始化，则初始化数组，默认长度为10 如果初始化过后，则每次扩容，扩容为 newCapacity = oldCapacity + (oldCapacity &gt;&gt; 1),即原来的1.5倍,如果为原来的1.5倍容量溢出了，则 如果上面一步扩容为原来的1.5倍超过Integer.MAX_VALUE-8了但又没溢出，则令容量等于Integer.MAX_VALUE，否则报错 Arrays.copyOf 是浅拷贝，浅拷贝是按位拷贝对象，它会创建一个新对象，这个对象有着原始对象属性值的一份精确拷贝。如果属性是基本类型，拷贝的就是基本类型的值，如果属性是内存地址（引用类型），拷贝的就是内存地址 add(int index, E element) 检查index是否比 size大，比0小 之后就是容量检测，扩容,溢出检测等，和上同 之后调用System.arraycopy(elementData, index, elementData, index + 1,size - index)。 最后elementData[index] = element; size++; get(int index) 判断范围，越界报错 return elementData[index] set(int index, E element) 在 index位置上放入新值，返回旧值 remove(int index) 删除index上的值，调用System.arraycopy，return 删掉的值 返回的是删掉的值 remove(Object o) 循环，遍历，找到一个，就删掉，并调用System.arraycopy 返回的是bool subList(int fromIndex, int toIndex) return new SubList(this, 0, fromIndex, toIndex) 从 this，可以看出生成的只是当前list的截取视图 trimToSize 去掉扩容多于的部分，使数组长度好等于size contains(Object o ) 循环遍历数组 找到equals的返回true]]></content>
+      <categories>
+        <category>JAVA知识点</category>
+      </categories>
+      <tags>
+        <tag>JAVA知识点</tag>
       </tags>
   </entry>
   <entry>

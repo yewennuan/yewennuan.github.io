@@ -111,11 +111,11 @@
 <meta name="keywords" content="NIFI">
 <meta property="og:type" content="article">
 <meta property="og:title" content="NIFI-安装">
-<meta property="og:url" content="http://yewennuan.com/2018/02/26/nifi-1/index.html">
+<meta property="og:url" content="http://yewennuan.com/2018/02/28/nifi-1/index.html">
 <meta property="og:site_name" content="努安">
 <meta property="og:description" content="NIFI网上的中文资料是真的少。特别是用docker启动NIFI。记录下来，当传家宝=v = 安装NIFImacOS没有 brew 的先安装brew1$ brew install nifi 通过brew安装完之后12$ cd /usr/local/Cellar/nifi/1.5.0/bin$ sudo nifi start 注意，上述路径有可能和作者不一样。因为对应的nifi版本不一样！！！ Li">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-02-26T11:42:11.141Z">
+<meta property="og:updated_time" content="2018-02-27T16:07:28.242Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="NIFI-安装">
 <meta name="twitter:description" content="NIFI网上的中文资料是真的少。特别是用docker启动NIFI。记录下来，当传家宝=v = 安装NIFImacOS没有 brew 的先安装brew1$ brew install nifi 通过brew安装完之后12$ cd /usr/local/Cellar/nifi/1.5.0/bin$ sudo nifi start 注意，上述路径有可能和作者不一样。因为对应的nifi版本不一样！！！ Li">
@@ -125,7 +125,7 @@
 
 
 
-  <link rel="canonical" href="http://yewennuan.com/2018/02/26/nifi-1/"/>
+  <link rel="canonical" href="http://yewennuan.com/2018/02/28/nifi-1/"/>
 
 
   <title>NIFI-安装 | 努安</title>
@@ -331,7 +331,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yewennuan.com/2018/02/26/nifi-1/">
+    <link itemprop="mainEntityOfPage" href="http://yewennuan.com/2018/02/28/nifi-1/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="nuan">
@@ -360,7 +360,7 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-26T19:42:11+08:00">2018-02-26</time>
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-28T00:07:28+08:00">2018-02-28</time>
             
 
             
@@ -396,9 +396,9 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2018/02/26/nifi-1/#comments" itemprop="discussionUrl">
+                <a href="/2018/02/28/nifi-1/#comments" itemprop="discussionUrl">
                   <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2018/02/26/nifi-1/" itemprop="commentCount"></span>
+                        data-disqus-identifier="2018/02/28/nifi-1/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -406,7 +406,7 @@
 
           
           
-             <span id="/2018/02/26/nifi-1/" class="leancloud_visitors" data-flag-title="NIFI-安装">
+             <span id="/2018/02/28/nifi-1/" class="leancloud_visitors" data-flag-title="NIFI-安装">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -452,7 +452,7 @@
   <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo yum install nifi</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
-<p>以上安装方法默认 java环境已经安装好 并且是jdk1.8或以上。</p>
+<p>以上安装方法默认 java环境已经安装好 并且是jdk1.8或以上。<br><a id="more"></a></p>
 <h4 id="docker"><a href="#docker" class="headerlink" title="docker"></a>docker</h4><p>容器大爱，只需要有docker环境就好了,非常方便，推荐使用docker安装<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ docker pull apache/nifi:1.5.0</span><br><span class="line">$ docker run --name nifi -p 8080:8080 -d apache/nifi:1.5.0</span><br></pre></td></tr></table></figure></p>
 <p>启动成功会显示该新建容器的id(这个id每个人都是不一样的):<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ c78fabb5d1eb99be5de736499f3c833e6e7a6d0608ef4457ee348887e22a35ce</span><br></pre></td></tr></table></figure></p>
 <p>关闭容器后，想第二次启动该容器,不应该重复上述的docker run命令，否则会报如下错误:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ docker run --name nifi -p 8080:8080 -d apache/nifi:1.5.0</span><br><span class="line">$ docker: Error response from daemon: Conflict. The container name <span class="string">"/nifi"</span> is already <span class="keyword">in</span> use by container <span class="string">"c78fabb5d1eb99be5de736499f3c833e6e7a6d0608ef4457ee348887e22a35ce"</span>. You have to remove (or rename) that container to be able to reuse that name.</span><br><span class="line">  See <span class="string">'docker run --help'</span>.</span><br></pre></td></tr></table></figure></p>
@@ -514,8 +514,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/02/26/hexo-next-1/" rel="next" title="Hexo Next折腾记录">
-                <i class="fa fa-chevron-left"></i> Hexo Next折腾记录
+              <a href="/2018/02/28/集合/" rel="next" title="JAVA知识点整理">
+                <i class="fa fa-chevron-left"></i> JAVA知识点整理
               </a>
             
           </div>
@@ -848,8 +848,8 @@
   
     <script type="text/javascript">
       var disqus_config = function () {
-        this.page.url = 'http://yewennuan.com/2018/02/26/nifi-1/';
-        this.page.identifier = '2018/02/26/nifi-1/';
+        this.page.url = 'http://yewennuan.com/2018/02/28/nifi-1/';
+        this.page.identifier = '2018/02/28/nifi-1/';
         this.page.title = 'NIFI-安装';
       };
       function loadComments () {

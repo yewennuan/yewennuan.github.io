@@ -327,7 +327,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yewennuan.com/2018/02/26/nifi-1/">
+    <link itemprop="mainEntityOfPage" href="http://yewennuan.com/2018/02/28/nifi-1/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="nuan">
@@ -346,7 +346,7 @@
         
           <h2 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/02/26/nifi-1/" itemprop="url">NIFI-安装</a></h2>
+                <a class="post-title-link" href="/2018/02/28/nifi-1/" itemprop="url">NIFI-安装</a></h2>
         
 
         <div class="post-meta">
@@ -358,7 +358,7 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-26T19:42:11+08:00">2018-02-26</time>
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-28T00:07:28+08:00">2018-02-28</time>
             
 
             
@@ -394,9 +394,9 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2018/02/26/nifi-1/#comments" itemprop="discussionUrl">
+                <a href="/2018/02/28/nifi-1/#comments" itemprop="discussionUrl">
                   <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2018/02/26/nifi-1/" itemprop="commentCount"></span>
+                        data-disqus-identifier="2018/02/28/nifi-1/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -404,7 +404,187 @@
 
           
           
-             <span id="/2018/02/26/nifi-1/" class="leancloud_visitors" data-flag-title="NIFI-安装">
+             <span id="/2018/02/28/nifi-1/" class="leancloud_visitors" data-flag-title="NIFI-安装">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <div class="note default"><p>NIFI网上的中文资料是真的少。特别是用docker启动NIFI。记录下来，当传家宝=v =</p></div>
+<h3 id="安装NIFI"><a href="#安装NIFI" class="headerlink" title="安装NIFI"></a>安装NIFI</h3><h4 id="macOS"><a href="#macOS" class="headerlink" title="macOS"></a>macOS</h4><p>没有 brew 的先安装<a href="https://brew.sh/index_zh.html" target="_blank" rel="noopener">brew</a><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ brew install nifi</span><br></pre></td></tr></table></figure></p>
+<p>通过brew安装完之后<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">cd</span> /usr/<span class="built_in">local</span>/Cellar/nifi/1.5.0/bin</span><br><span class="line">$ sudo nifi start</span><br></pre></td></tr></table></figure></p>
+<p>注意，上述路径有可能和作者不一样。因为对应的nifi版本不一样！！！</p>
+<h4 id="Linux"><a href="#Linux" class="headerlink" title="Linux"></a>Linux</h4><p><a href="http://nifi.apache.org/download.html" target="_blank" rel="noopener">官网下载</a>,下完之后找到工程目录 bin 然后 </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo nifi start</span><br></pre></td></tr></table></figure>
+<p>附加牢骚(我懒得试0v0,就试了用docker启动ubuntu16.04,然后不行)：</p>
+<ul>
+<li><p>Ubuntu / Debian 系的可以试试看：</p>
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt-get install nifi</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Centos / Redhat 可以试试:</p>
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo yum install nifi</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>以上安装方法默认 java环境已经安装好 并且是jdk1.8或以上。<br>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/02/28/nifi-1/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yewennuan.com/2018/02/28/集合/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="nuan">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="努安">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/02/28/集合/" itemprop="url">JAVA知识点整理</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-28T00:06:57+08:00">2018-02-28</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/JAVA知识点/" itemprop="url" rel="index"><span itemprop="name">JAVA知识点</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/02/28/集合/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2018/02/28/集合/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2018/02/28/集合/" class="leancloud_visitors" data-flag-title="JAVA知识点整理">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -437,29 +617,64 @@
       
         
           
-            <div class="note default"><p>NIFI网上的中文资料是真的少。特别是用docker启动NIFI。记录下来，当传家宝=v =</p></div>
-<h3 id="安装NIFI"><a href="#安装NIFI" class="headerlink" title="安装NIFI"></a>安装NIFI</h3><h4 id="macOS"><a href="#macOS" class="headerlink" title="macOS"></a>macOS</h4><p>没有 brew 的先安装<a href="https://brew.sh/index_zh.html" target="_blank" rel="noopener">brew</a><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ brew install nifi</span><br></pre></td></tr></table></figure></p>
-<p>通过brew安装完之后<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">cd</span> /usr/<span class="built_in">local</span>/Cellar/nifi/1.5.0/bin</span><br><span class="line">$ sudo nifi start</span><br></pre></td></tr></table></figure></p>
-<p>注意，上述路径有可能和作者不一样。因为对应的nifi版本不一样！！！</p>
-<h4 id="Linux"><a href="#Linux" class="headerlink" title="Linux"></a>Linux</h4><p><a href="http://nifi.apache.org/download.html" target="_blank" rel="noopener">官网下载</a>,下完之后找到工程目录 bin 然后 </p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo nifi start</span><br></pre></td></tr></table></figure>
-<p>附加牢骚(我懒得试0v0,就试了用docker启动ubuntu16.04,然后不行)：</p>
+            <p>###集合</p>
 <ul>
-<li><p>Ubuntu / Debian 系的可以试试看：</p>
-  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt-get install nifi</span><br></pre></td></tr></table></figure>
+<li>List<ul>
+<li>ArrayList<ul>
+<li>有3中构造函数。无参则elementData = {};有int参则负数报错，非负数初始化相应大小数组;Collection&lt;? extends E&gt; c入参的，直接elementData = c.toArray();</li>
+<li>Integer.MAX_VALUE+1 返回的是最大的负数而不是最小的负数。所以c= Integer.MAX_VALUE+1 ,c= c-2,最终c为正数</li>
+<li>负数向右移,不管移多少位始终都是负数</li>
+<li>add和addAll方法会判断elementData这个数组容器是否为空，为空则初始化，如果是add则值为默认的10，如果是addAll方法，则选入参 size和10较大的一个值</li>
+<li>add(E e)方法<ul>
+<li>如果未初始化，则初始化数组，默认长度为10</li>
+<li>如果初始化过后，则每次扩容，扩容为 newCapacity = oldCapacity + (oldCapacity &gt;&gt; 1),即原来的1.5倍,如果为原来的1.5倍容量溢出了，则</li>
+<li>如果上面一步扩容为原来的1.5倍超过Integer.MAX_VALUE-8了但又没溢出，则令容量等于Integer.MAX_VALUE，否则报错</li>
+<li>Arrays.copyOf 是浅拷贝，浅拷贝是按位拷贝对象，它会创建一个新对象，这个对象有着原始对象属性值的一份精确拷贝。如果属性是基本类型，拷贝的就是基本类型的值，如果属性是内存地址（引用类型），拷贝的就是内存地址 </li>
+</ul>
 </li>
-<li><p>Centos / Redhat 可以试试:</p>
-  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo yum install nifi</span><br></pre></td></tr></table></figure>
+<li>add(int index, E element)<ul>
+<li>检查index是否比 size大，比0小</li>
+<li>之后就是容量检测，扩容,溢出检测等，和上同</li>
+<li>之后调用System.arraycopy(elementData, index, elementData, index + 1,size - index)。</li>
+<li>最后elementData[index] = element; size++;</li>
+</ul>
+</li>
+<li>get(int index)<ul>
+<li>判断范围，越界报错</li>
+<li>return elementData[index]</li>
+</ul>
+</li>
+<li>set(int index, E element)<ul>
+<li>在 index位置上放入新值，返回旧值</li>
+</ul>
+</li>
+<li>remove(int index)<ul>
+<li>删除index上的值，调用System.arraycopy，return 删掉的值</li>
+<li>返回的是删掉的值</li>
+</ul>
+</li>
+<li>remove(Object o)<ul>
+<li>循环，遍历，找到一个，就删掉，并调用System.arraycopy</li>
+<li>返回的是bool</li>
+</ul>
+</li>
+<li>subList(int fromIndex, int toIndex)<ul>
+<li>return new SubList(this, 0, fromIndex, toIndex) 从 this，可以看出生成的只是当前list的截取视图</li>
+</ul>
+</li>
+<li>trimToSize<ul>
+<li>去掉扩容多于的部分，使数组长度好等于size</li>
+</ul>
+</li>
+<li>contains(Object o )<ul>
+<li>循环遍历数组 找到equals的返回true</li>
+</ul>
 </li>
 </ul>
-<p>以上安装方法默认 java环境已经安装好 并且是jdk1.8或以上。</p>
-<h4 id="docker"><a href="#docker" class="headerlink" title="docker"></a>docker</h4><p>容器大爱，只需要有docker环境就好了,非常方便，推荐使用docker安装<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ docker pull apache/nifi:1.5.0</span><br><span class="line">$ docker run --name nifi -p 8080:8080 -d apache/nifi:1.5.0</span><br></pre></td></tr></table></figure></p>
-<p>启动成功会显示该新建容器的id(这个id每个人都是不一样的):<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ c78fabb5d1eb99be5de736499f3c833e6e7a6d0608ef4457ee348887e22a35ce</span><br></pre></td></tr></table></figure></p>
-<p>关闭容器后，想第二次启动该容器,不应该重复上述的docker run命令，否则会报如下错误:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ docker run --name nifi -p 8080:8080 -d apache/nifi:1.5.0</span><br><span class="line">$ docker: Error response from daemon: Conflict. The container name <span class="string">"/nifi"</span> is already <span class="keyword">in</span> use by container <span class="string">"c78fabb5d1eb99be5de736499f3c833e6e7a6d0608ef4457ee348887e22a35ce"</span>. You have to remove (or rename) that container to be able to reuse that name.</span><br><span class="line">  See <span class="string">'docker run --help'</span>.</span><br></pre></td></tr></table></figure></p>
-<p>应根据名字或者id来启动，名称即 –name 后面的参数，这里是nifi，所以命令如下:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker start nifi</span><br></pre></td></tr></table></figure></p>
-<p>启动 docker 容器命令后面也可以加个 –rm,即<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker run --rm --name nifi -p 8080:8080 -d apache/nifi:1.5.0</span><br></pre></td></tr></table></figure></p>
-<p>这个参数是说容器退出后随之将其删除。这样你每次起的都是一个全新的镜像。</p>
-<p>搞定收工</p>
+</li>
+</ul>
+</li>
+</ul>
 
           
         
