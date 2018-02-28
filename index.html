@@ -437,10 +437,11 @@
       
         
           
-            <h3 id="集合"><a href="#集合" class="headerlink" title="集合"></a>集合</h3><ul>
+            <div class="note default"><p>这里是阅读java8源码以及一些java知识的随笔，没头没尾，不严谨，仅自己看看</p></div>
+<h3 id="集合"><a href="#集合" class="headerlink" title="集合"></a>集合</h3><ul>
 <li>List<ul>
 <li>ArrayList<ul>
-<li>有3中构造函数。无参则elementData = {};有int参则负数报错，非负数初始化相应大小数组;Collection&lt;? extends E&gt; c入参的，直接elementData = c.toArray();</li>
+<li>有3种构造函数。无参则elementData = {};有int参则负数报错，非负数初始化相应大小数组;Collection&lt;? extends E&gt; c入参的，直接elementData = c.toArray();</li>
 <li>Integer.MAX_VALUE+1 返回的是最大的负数而不是最小的负数。所以c= Integer.MAX_VALUE+1 ,c= c-2,最终c为正数</li>
 <li>负数向右移,不管移多少位始终都是负数</li>
 <li>add和addAll方法会判断elementData这个数组容器是否为空，为空则初始化，如果是add则值为默认的10，如果是addAll方法，则选入参 size和10较大的一个值</li>
@@ -489,6 +490,45 @@
 <li>循环遍历数组 找到equals的返回true</li>
 </ul>
 </li>
+</ul>
+</li>
+<li>LinkedList<ul>
+<li>add(int index, E element)<ul>
+<li>校验 index不能想超过size</li>
+<li>如果list里已经又一个元素2，如果 add(0,1),则元素list数据为[1,2],如果add(1,2),则结果为[2,1],即可决定加在链表头还是尾，或者是链表任意一个位置</li>
+</ul>
+</li>
+<li>add(E e)方法<ul>
+<li>校验</li>
+<li>在链表尾加一个node</li>
+</ul>
+</li>
+<li>addAll(int index, Collection&lt;? extends E&gt; c)<ul>
+<li>会将 collection类型的数据先变成一个链表，再插入原先链表的任意位置，位置随index而定，与add方法类似</li>
+</ul>
+</li>
+<li>node(int index)<ul>
+<li>首先会判断 index &lt; (size &gt;&gt; 1) 是否成立，来判断从头开始找还是从尾巴开始找，所以随机读取效率低</li>
+</ul>
+</li>
+<li>get(int index)<ul>
+<li>检验</li>
+<li>调用node(int index)</li>
+</ul>
+</li>
+<li>remove()<ul>
+<li>删除第一个</li>
+</ul>
+</li>
+<li>set(int index, E element)<ul>
+<li>直接通过node(i)方法找到该node,然后直接替换该node.item</li>
+</ul>
+</li>
+<li>2种构造函数。无参构造函数，就是个空方法0 0，有参构造函数调用addAll方法，</li>
+</ul>
+</li>
+<li>疑问<ul>
+<li>System.arraycopy(elementData, index, elementData, index + 1,size - index)，数组自己拷贝到自己时，明明有重叠部分，却并不会覆盖？由于是native方法，猜测有可能是从数组尾部开始复制的！</li>
 </ul>
 </li>
 </ul>
