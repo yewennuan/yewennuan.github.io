@@ -327,6 +327,343 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yewennuan.com/2018/03/05/谈谈Elasticsearch聚合之如何"grouby"与"having"/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="nuan">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="努安">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/03/05/谈谈Elasticsearch聚合之如何"grouby"与"having"/" itemprop="url">谈谈Elasticsearch聚合之如何"grouby"与"having"</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-05T00:00:00+08:00">2018-03-05</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/elasticsearch/" itemprop="url" rel="index"><span itemprop="name">elasticsearch</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/03/05/谈谈Elasticsearch聚合之如何"grouby"与"having"/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2018/03/05/谈谈Elasticsearch聚合之如何"grouby"与"having"/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2018/03/05/谈谈Elasticsearch聚合之如何"grouby"与"having"/" class="leancloud_visitors" data-flag-title="谈谈Elasticsearch聚合之如何"grouby"与"having"">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <div class="note default"><p>最近工作中碰到了一些elasticsearch聚合的问题。明明sql都会写，但是数据导入es里之后，就不知道怎么写Query DSL取出来TmT,有木有。在这里记录一下这次搞了一天的成果</p></div>
+<h3 id="开始扯淡0v0"><a href="#开始扯淡0v0" class="headerlink" title="开始扯淡0v0"></a>开始扯淡0v0</h3><p>&emsp;&emsp;我们就从问题出发。首先起个elasticsearch 5.x。<br>然后建立一个type，cURL：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">$ curl -X PUT \</span><br><span class="line">      http://localhost:9200/shirts \</span><br><span class="line">      -H <span class="string">'Cache-Control: no-cache'</span> \</span><br><span class="line">      -H <span class="string">'Content-Type: application/json'</span> \</span><br><span class="line">      -H <span class="string">'Postman-Token: 360fcbcc-75ef-6dac-baec-3e5f02b9f3b8'</span> \</span><br><span class="line">      -d <span class="string">'&#123;</span></span><br><span class="line"><span class="string">        "mappings": &#123;</span></span><br><span class="line"><span class="string">            "item": &#123;</span></span><br><span class="line"><span class="string">                "properties": &#123;</span></span><br><span class="line"><span class="string">                    "brand": &#123; "type": "keyword"&#125;,</span></span><br><span class="line"><span class="string">                    "color": &#123; "type": "keyword"&#125;,</span></span><br><span class="line"><span class="string">                    "model": &#123; "type": "keyword"&#125;</span></span><br><span class="line"><span class="string">                &#125;</span></span><br><span class="line"><span class="string">            &#125;</span></span><br><span class="line"><span class="string">        &#125;</span></span><br><span class="line"><span class="string">    &#125;'</span></span><br></pre></td></tr></table></figure></p>
+<p>然后mock一些数据，cURL:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line">$ curl -X PUT \</span><br><span class="line">    http://localhost:9200/shirts/item/1 \</span><br><span class="line">    -H <span class="string">'Cache-Control: no-cache'</span> \</span><br><span class="line">    -H <span class="string">'Content-Type: application/json'</span> \</span><br><span class="line">    -H <span class="string">'Postman-Token: f767d0ad-a6cc-681c-36a1-90843594629e'</span> \</span><br><span class="line">    -d <span class="string">'&#123;</span></span><br><span class="line"><span class="string">      "brand": "gucci",</span></span><br><span class="line"><span class="string">      "color": "red",</span></span><br><span class="line"><span class="string">      "model": "big"</span></span><br><span class="line"><span class="string">  &#125;'</span></span><br><span class="line">$ curl -X PUT \</span><br><span class="line">    http://localhost:9200/shirts/item/2 \</span><br><span class="line">    -H <span class="string">'Cache-Control: no-cache'</span> \</span><br><span class="line">    -H <span class="string">'Content-Type: application/json'</span> \</span><br><span class="line">    -H <span class="string">'Postman-Token: f767d0ad-a6cc-681c-36a1-90843594629e'</span> \</span><br><span class="line">    -d <span class="string">'&#123;</span></span><br><span class="line"><span class="string">      "brand": "gucci",</span></span><br><span class="line"><span class="string">      "color": "red",</span></span><br><span class="line"><span class="string">      "model": "small"</span></span><br><span class="line"><span class="string">  &#125;'</span></span><br><span class="line">$ curl -X PUT \</span><br><span class="line">    http://localhost:9200/shirts/item/3 \</span><br><span class="line">    -H <span class="string">'Cache-Control: no-cache'</span> \</span><br><span class="line">    -H <span class="string">'Content-Type: application/json'</span> \</span><br><span class="line">    -H <span class="string">'Postman-Token: f767d0ad-a6cc-681c-36a1-90843594629e'</span> \</span><br><span class="line">    -d <span class="string">'&#123;</span></span><br><span class="line"><span class="string">      "brand": "nike",</span></span><br><span class="line"><span class="string">      "color": "white",</span></span><br><span class="line"><span class="string">      "model": "ugly"</span></span><br><span class="line"><span class="string">  &#125;'</span></span><br><span class="line">$ curl -X PUT \</span><br><span class="line">    http://localhost:9200/shirts/item/4 \</span><br><span class="line">    -H <span class="string">'Cache-Control: no-cache'</span> \</span><br><span class="line">    -H <span class="string">'Content-Type: application/json'</span> \</span><br><span class="line">    -H <span class="string">'Postman-Token: f767d0ad-a6cc-681c-36a1-90843594629e'</span> \</span><br><span class="line">    -d <span class="string">'&#123;</span></span><br><span class="line"><span class="string">      "brand": "nike",</span></span><br><span class="line"><span class="string">      "color": "red",</span></span><br><span class="line"><span class="string">      "model": "nice"</span></span><br><span class="line"><span class="string">  &#125;'</span></span><br><span class="line">$ curl -X PUT \</span><br><span class="line">    http://localhost:9200/shirts/item/5 \</span><br><span class="line">    -H <span class="string">'Cache-Control: no-cache'</span> \</span><br><span class="line">    -H <span class="string">'Content-Type: application/json'</span> \</span><br><span class="line">    -H <span class="string">'Postman-Token: f767d0ad-a6cc-681c-36a1-90843594629e'</span> \</span><br><span class="line">    -d <span class="string">'&#123;</span></span><br><span class="line"><span class="string">      "brand": "puma",</span></span><br><span class="line"><span class="string">      "color": "yellow",</span></span><br><span class="line"><span class="string">      "model": "honor"</span></span><br><span class="line"><span class="string">  &#125;'</span></span><br></pre></td></tr></table></figure></p>
+<p>&emsp;&emsp;brand是品牌，color是颜色,model是款式。然后brand,color,model三者确定数据唯一性，其他没任何限制，那么问题来了，<code>只有一种颜色的品牌 总共有几个?</code><br>下面是对应的sql:<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> <span class="string">`item`</span> (</span><br><span class="line">  <span class="string">`id`</span> <span class="built_in">int</span>(<span class="number">11</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span> AUTO_INCREMENT,</span><br><span class="line">  <span class="string">`brand`</span> <span class="built_in">varchar</span>(<span class="number">20</span>) <span class="keyword">DEFAULT</span> <span class="literal">NULL</span>,</span><br><span class="line">  <span class="string">`color`</span> <span class="built_in">varchar</span>(<span class="number">20</span>) <span class="keyword">DEFAULT</span> <span class="literal">NULL</span>,</span><br><span class="line">  <span class="string">`model`</span> <span class="built_in">varchar</span>(<span class="number">20</span>) <span class="keyword">DEFAULT</span> <span class="literal">NULL</span>,</span><br><span class="line">  PRIMARY <span class="keyword">KEY</span> (<span class="string">`id`</span>)</span><br><span class="line">) <span class="keyword">ENGINE</span>=<span class="keyword">InnoDB</span> <span class="keyword">DEFAULT</span> <span class="keyword">CHARSET</span>=utf8;</span><br><span class="line"></span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> item (<span class="keyword">id</span>, brand, color, <span class="keyword">model</span>) <span class="keyword">VALUES</span> (<span class="number">1</span>, <span class="string">'gucci'</span>, <span class="string">'red'</span>, <span class="string">'big'</span>);</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> item (<span class="keyword">id</span>, brand, color, <span class="keyword">model</span>) <span class="keyword">VALUES</span> (<span class="number">2</span>, <span class="string">'gucci'</span>, <span class="string">'red'</span>, <span class="string">'small'</span>);</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> item (<span class="keyword">id</span>, brand, color, <span class="keyword">model</span>) <span class="keyword">VALUES</span> (<span class="number">3</span>, <span class="string">'nike'</span>, <span class="string">'white'</span>, <span class="string">'ugly'</span>);</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> item (<span class="keyword">id</span>, brand, color, <span class="keyword">model</span>) <span class="keyword">VALUES</span> (<span class="number">4</span>, <span class="string">'nike'</span>, <span class="string">'red'</span>, <span class="string">'nice'</span>);</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> item (<span class="keyword">id</span>, brand, color, <span class="keyword">model</span>) <span class="keyword">VALUES</span> (<span class="number">5</span>, <span class="string">'puma'</span>, <span class="string">'yellow'</span>, <span class="string">'honor'</span>);</span><br><span class="line">#1 返回只拥有一种颜色的品牌</span><br><span class="line"><span class="keyword">select</span> cc.brand <span class="keyword">from</span> (<span class="keyword">select</span> brand,color <span class="keyword">from</span> item <span class="keyword">GROUP</span> <span class="keyword">BY</span> brand, color)cc <span class="keyword">GROUP</span> <span class="keyword">BY</span> cc.brand <span class="keyword">HAVING</span>  <span class="keyword">count</span>(cc.brand)=<span class="number">1</span></span><br><span class="line">#<span class="number">2</span> 返回只拥有一种颜色的品牌 总共个数</span><br><span class="line"><span class="keyword">select</span> <span class="keyword">count</span>(<span class="number">1</span>) <span class="keyword">FROM</span> (<span class="keyword">select</span> cc.brand <span class="keyword">from</span> (<span class="keyword">select</span> brand,color <span class="keyword">from</span> item <span class="keyword">GROUP</span> <span class="keyword">BY</span> brand, color)cc <span class="keyword">GROUP</span> <span class="keyword">BY</span> cc.brand <span class="keyword">HAVING</span>  <span class="keyword">count</span>(cc.brand)=<span class="number">1</span>)dd;</span><br></pre></td></tr></table></figure></p>
+<p>上述结果分别为 gucci,puma; 2;那么es的 Query DSL如何写呢？直接上答案：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">$ curl -X POST \</span><br><span class="line">  http://localhost:9200/shirts/_search \</span><br><span class="line">  -H <span class="string">'Cache-Control: no-cache'</span> \</span><br><span class="line">  -H <span class="string">'Content-Type: application/json'</span> \</span><br><span class="line">  -H <span class="string">'Postman-Token: a95749ae-f92a-4f3d-0b7d-c0fec107cf5d'</span> \</span><br><span class="line">  -d <span class="string">'&#123;</span></span><br><span class="line"><span class="string">  "aggs": &#123;</span></span><br><span class="line"><span class="string">    "groupby1": &#123;</span></span><br><span class="line"><span class="string">      "terms": &#123;</span></span><br><span class="line"><span class="string">        "field": "brand"</span></span><br><span class="line"><span class="string">      &#125;,</span></span><br><span class="line"><span class="string">      "aggs": &#123;</span></span><br><span class="line"><span class="string">        "groupby2": &#123;</span></span><br><span class="line"><span class="string">          "cardinality": &#123;</span></span><br><span class="line"><span class="string">            "field": "color"</span></span><br><span class="line"><span class="string">          &#125;</span></span><br><span class="line"><span class="string">        &#125;,</span></span><br><span class="line"><span class="string">        "sales_bucket_filter": &#123;</span></span><br><span class="line"><span class="string">                    "bucket_selector": &#123;</span></span><br><span class="line"><span class="string">                        "buckets_path": &#123;</span></span><br><span class="line"><span class="string">                          "groupby2": "groupby2"</span></span><br><span class="line"><span class="string">                        &#125;,</span></span><br><span class="line"><span class="string">                        "script": "params.groupby2 == 1"</span></span><br><span class="line"><span class="string">                    &#125;</span></span><br><span class="line"><span class="string">                &#125;</span></span><br><span class="line"><span class="string">      &#125;</span></span><br><span class="line"><span class="string">    &#125;</span></span><br><span class="line"><span class="string">  &#125;</span></span><br><span class="line"><span class="string">  ,"size": 0</span></span><br><span class="line"><span class="string">&#125;'</span></span><br></pre></td></tr></table></figure></p>
+<p>返回的response为：<br><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">"took"</span>: <span class="number">1</span>,</span><br><span class="line">    <span class="attr">"timed_out"</span>: <span class="literal">false</span>,</span><br><span class="line">    <span class="attr">"_shards"</span>: &#123;</span><br><span class="line">        <span class="attr">"total"</span>: <span class="number">5</span>,</span><br><span class="line">        <span class="attr">"successful"</span>: <span class="number">5</span>,</span><br><span class="line">        <span class="attr">"failed"</span>: <span class="number">0</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">"hits"</span>: &#123;</span><br><span class="line">        <span class="attr">"total"</span>: <span class="number">5</span>,</span><br><span class="line">        <span class="attr">"max_score"</span>: <span class="number">0</span>,</span><br><span class="line">        <span class="attr">"hits"</span>: []</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">"aggregations"</span>: &#123;</span><br><span class="line">        <span class="attr">"groupby1"</span>: &#123;</span><br><span class="line">            <span class="attr">"doc_count_error_upper_bound"</span>: <span class="number">0</span>,</span><br><span class="line">            <span class="attr">"sum_other_doc_count"</span>: <span class="number">0</span>,</span><br><span class="line">            <span class="attr">"buckets"</span>: [</span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="attr">"key"</span>: <span class="string">"gucci"</span>,</span><br><span class="line">                    <span class="attr">"doc_count"</span>: <span class="number">2</span>,</span><br><span class="line">                    <span class="attr">"groupby2"</span>: &#123;</span><br><span class="line">                        <span class="attr">"value"</span>: <span class="number">1</span></span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;,</span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="attr">"key"</span>: <span class="string">"puma"</span>,</span><br><span class="line">                    <span class="attr">"doc_count"</span>: <span class="number">1</span>,</span><br><span class="line">                    <span class="attr">"groupby2"</span>: &#123;</span><br><span class="line">                        <span class="attr">"value"</span>: <span class="number">1</span></span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            ]</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>最后只要取buckets.size就好了（有点间接0 0，网上实在是搜不到如何直接取count的那种了，有好方法，欢迎留言），大功告成。至于如何理解这个Query DSL，其实和sql很像，你可以对比我写的sql来理解。<br>如果你是想搞清楚到底是咋回事的话，还是直接看官方文档吧，下面是地址，哪里不懂看哪里即可：</p>
+<ul>
+<li>es的aggregations(聚合)<ul>
+<li><a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations.html" target="_blank" rel="noopener">官方文档</a></li>
+<li><a href="http://cwiki.apachecn.org/display/Elasticsearch/Aggregations" target="_blank" rel="noopener">中文文档</a></li>
+</ul>
+</li>
+<li>es的cardinality字段啥意思<ul>
+<li><a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations-metrics-cardinality-aggregation.html" target="_blank" rel="noopener">官方文档</a></li>
+<li><a href="http://cwiki.apachecn.org/pages/viewpage.action?pageId=5505309" target="_blank" rel="noopener">中文文档</a></li>
+</ul>
+</li>
+<li>es的如何group by field1,field2(即Children Aggregation )<ul>
+<li><a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations-bucket-children-aggregation.html" target="_blank" rel="noopener">官方文档</a></li>
+<li><a href="http://cwiki.apachecn.org/display/Elasticsearch/Children+Aggregation" target="_blank" rel="noopener">中文文档</a></li>
+</ul>
+</li>
+<li>我上面使用的 sales_bucket_filter是什么意思(即)<ul>
+<li><a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations-pipeline-bucket-script-aggregation.html" target="_blank" rel="noopener">官方文档</a></li>
+<li><a href="http://cwiki.apachecn.org/pages/viewpage.action?pageId=10030393" target="_blank" rel="noopener">中文文档</a><h3 id="题外话"><a href="#题外话" class="headerlink" title="题外话"></a>题外话</h3>在es5.x开始 string字段就被当作废弃字段，而取而代之的是text,keyword。text你可以近似的理解成2.x里的<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line"><span class="attr">"mappings"</span>: &#123;</span><br><span class="line">            <span class="attr">"item"</span>: &#123;</span><br><span class="line">                <span class="attr">"properties"</span>: &#123;</span><br><span class="line">                    <span class="attr">"test_word"</span>: &#123; <span class="attr">"type"</span>: <span class="string">"string"</span>,<span class="attr">"index"</span>: <span class="string">"analyzed"</span>&#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+<p>而keyword则理解成<br><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line"><span class="attr">"mappings"</span>: &#123;</span><br><span class="line">            <span class="attr">"item"</span>: &#123;</span><br><span class="line">                <span class="attr">"properties"</span>: &#123;</span><br><span class="line">                    <span class="attr">"test_word"</span>: &#123; <span class="attr">"type"</span>: <span class="string">"string"</span>,<span class="attr">"index"</span>: <span class="string">"not_analyzed"</span>&#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yewennuan.com/2018/03/01/疑问/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="nuan">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="努安">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/03/01/疑问/" itemprop="url">奇葩问题与神奇想法</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-01T00:00:00+08:00">2018-03-01</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/03/01/疑问/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2018/03/01/疑问/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2018/03/01/疑问/" class="leancloud_visitors" data-flag-title="奇葩问题与神奇想法">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <div class="note default"><p>平时工作或者学习时，碰到的奇葩问题以及有时候自己坑自己的神奇想法 T-T，如果有人对某些东西有见解，可以在下面留言(梯子自备)</p></div>
+<h3 id="奇葩问题"><a href="#奇葩问题" class="headerlink" title="奇葩问题"></a>奇葩问题</h3><h3 id="神奇想法"><a href="#神奇想法" class="headerlink" title="神奇想法"></a>神奇想法</h3><ul>
+<li>在mysql中，select id from tableA where id in (select id from tableB where 1=0)的结果并没有报错，并返回预期的结果，即什么都找不到。用过mybatis的人都知道，我们用foreach标签配in后面的参数的时候，都要特别注意list为空的情况，因为 where xxx in ()这样是会报错。那mysql内部是如何避免这种错误的呢0 0？</li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yewennuan.com/2018/02/28/集合/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -478,6 +815,11 @@
 <li>返回的是bool</li>
 </ul>
 </li>
+<li>removeAll(Collection&lt;?&gt; c)<ul>
+<li>for循环 判断 c里面是否有list里的元素c.contains(elementData[r])==false,如果没有，则 elementData[w++] = elementData[r]。</li>
+<li>如果抛异常了，则将后面还没遍历到的数据放到从索引w处开始的地方</li>
+</ul>
+</li>
 <li>subList(int fromIndex, int toIndex)<ul>
 <li>return new SubList(this, 0, fromIndex, toIndex) 从 this，可以看出生成的只是当前list的截取视图</li>
 </ul>
@@ -529,6 +871,7 @@
 </li>
 <li>疑问<ul>
 <li>System.arraycopy(elementData, index, elementData, index + 1,size - index)，数组自己拷贝到自己时，明明有重叠部分，却并不会覆盖？由于是native方法，猜测有可能是从数组尾部开始复制的！</li>
+<li>list 里有个 modcount有啥用？ 后来发现有些方法里有判断 modCount == expectedModCount，所以modCount是用来保证，多线程操作时，抛出错误，阻止方法执行</li>
 </ul>
 </li>
 </ul>
