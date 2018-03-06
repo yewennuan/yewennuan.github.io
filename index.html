@@ -583,13 +583,14 @@
 
       
         
-          
-            <div class="note default"><p>平时工作或者学习时，碰到的奇葩问题以及有时候自己坑自己的神奇想法 T-T，如果有人对某些东西有见解，可以在下面留言(梯子自备)</p></div>
-<h3 id="奇葩问题"><a href="#奇葩问题" class="headerlink" title="奇葩问题"></a>奇葩问题</h3><h3 id="神奇想法"><a href="#神奇想法" class="headerlink" title="神奇想法"></a>神奇想法</h3><ul>
-<li>在mysql中，select id from tableA where id in (select id from tableB where 1=0)的结果并没有报错，并返回预期的结果，即什么都找不到。用过mybatis的人都知道，我们用foreach标签配in后面的参数的时候，都要特别注意list为空的情况，因为 where xxx in ()这样是会报错。那mysql内部是如何避免这种错误的呢0 0？</li>
-</ul>
-
-          
+          <div class="note default"><p>平时工作或者学习时，碰到的奇葩问题以及有时候自己坑自己的神奇想法 T-T，如果有人对某些东西有见解，可以在下面留言(梯子自备)</p></div>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/03/01/疑问/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -747,112 +748,14 @@
 
       
         
-          
-            <div class="note default"><p>这里是阅读java8源码以及一些java知识的随笔，没头没尾，不严谨，仅自己看看</p></div>
-<h3 id="集合"><a href="#集合" class="headerlink" title="集合"></a>集合</h3><ul>
-<li>List<ul>
-<li>ArrayList<ul>
-<li>有3种构造函数。无参则elementData = {};有int参则负数报错，非负数初始化相应大小数组;Collection&lt;? extends E&gt; c入参的，直接elementData = c.toArray();</li>
-<li>Integer.MAX_VALUE+1 返回的是最大的负数而不是最小的负数。所以c= Integer.MAX_VALUE+1 ,c= c-2,最终c为正数</li>
-<li>负数向右移,不管移多少位始终都是负数</li>
-<li>add和addAll方法会判断elementData这个数组容器是否为空，为空则初始化，如果是add则值为默认的10，如果是addAll方法，则选入参 size和10较大的一个值</li>
-<li>add(E e)方法<ul>
-<li>如果未初始化，则初始化数组，默认长度为10</li>
-<li>如果初始化过后，则每次扩容，扩容为 newCapacity = oldCapacity + (oldCapacity &gt;&gt; 1),即原来的1.5倍,如果为原来的1.5倍容量溢出了，则</li>
-<li>如果上面一步扩容为原来的1.5倍超过Integer.MAX_VALUE-8了但又没溢出，则令容量等于Integer.MAX_VALUE，否则报错</li>
-<li>Arrays.copyOf 是浅拷贝，浅拷贝是按位拷贝对象，它会创建一个新对象，这个对象有着原始对象属性值的一份精确拷贝。如果属性是基本类型，拷贝的就是基本类型的值，如果属性是内存地址（引用类型），拷贝的就是内存地址 </li>
-</ul>
-</li>
-<li>add(int index, E element)<ul>
-<li>检查index是否比 size大，比0小</li>
-<li>之后就是容量检测，扩容,溢出检测等，和上同</li>
-<li>之后调用System.arraycopy(elementData, index, elementData, index + 1,size - index)。</li>
-<li>最后elementData[index] = element; size++;</li>
-</ul>
-</li>
-<li>get(int index)<ul>
-<li>判断范围，越界报错</li>
-<li>return elementData[index]</li>
-</ul>
-</li>
-<li>set(int index, E element)<ul>
-<li>在 index位置上放入新值，返回旧值</li>
-</ul>
-</li>
-<li>remove(int index)<ul>
-<li>删除index上的值，调用System.arraycopy，return 删掉的值</li>
-<li>返回的是删掉的值</li>
-</ul>
-</li>
-<li>remove(Object o)<ul>
-<li>循环，遍历，找到一个，就删掉，并调用System.arraycopy</li>
-<li>返回的是bool</li>
-</ul>
-</li>
-<li>removeAll(Collection&lt;?&gt; c)<ul>
-<li>for循环 判断 c里面是否有list里的元素c.contains(elementData[r])==false,如果没有，则 elementData[w++] = elementData[r]。</li>
-<li>如果抛异常了，则将后面还没遍历到的数据放到从索引w处开始的地方</li>
-</ul>
-</li>
-<li>subList(int fromIndex, int toIndex)<ul>
-<li>return new SubList(this, 0, fromIndex, toIndex) 从 this，可以看出生成的只是当前list的截取视图</li>
-</ul>
-</li>
-<li>trimToSize<ul>
-<li>去掉扩容多于的部分，使数组长度好等于size</li>
-</ul>
-</li>
-<li>contains(Object o )<ul>
-<li>循环遍历数组 找到equals的返回true</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>LinkedList<ul>
-<li>add(int index, E element)<ul>
-<li>校验 index不能想超过size</li>
-<li>如果list里已经又一个元素2，如果 add(0,1),则元素list数据为[1,2],如果add(1,2),则结果为[2,1],即可决定加在链表头还是尾，或者是链表任意一个位置</li>
-</ul>
-</li>
-<li>add(E e)方法<ul>
-<li>校验</li>
-<li>在链表尾加一个node</li>
-</ul>
-</li>
-<li>addAll(int index, Collection&lt;? extends E&gt; c)<ul>
-<li>会将 collection类型的数据先变成一个链表，再插入原先链表的任意位置，位置随index而定，与add方法类似</li>
-</ul>
-</li>
-<li>node(int index)<ul>
-<li>首先会判断 index &lt; (size &gt;&gt; 1) 是否成立，来判断从头开始找还是从尾巴开始找，所以随机读取效率低</li>
-</ul>
-</li>
-<li>get(int index)<ul>
-<li>检验</li>
-<li>调用node(int index)</li>
-</ul>
-</li>
-<li>remove()<ul>
-<li>删除第一个</li>
-</ul>
-</li>
-<li>set(int index, E element)<ul>
-<li>直接通过node(i)方法找到该node,然后直接替换该node.item</li>
-</ul>
-</li>
-<li>2种构造函数。无参构造函数，就是个空方法0 0，有参构造函数调用addAll方法，</li>
-</ul>
-</li>
-<li>疑问<ul>
-<li>System.arraycopy(elementData, index, elementData, index + 1,size - index)，数组自己拷贝到自己时，明明有重叠部分，却并不会覆盖？由于是native方法，猜测有可能是从数组尾部开始复制的！</li>
-<li>list 里有个 modcount有啥用？ 后来发现有些方法里有判断 modCount == expectedModCount，所以modCount是用来保证，多线程操作时，抛出错误，阻止方法执行</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-
-          
+          <div class="note default"><p>这里是阅读java8源码以及一些java知识的随笔，没头没尾，不严谨，仅自己看看</p></div>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/02/28/集合/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1191,7 +1094,7 @@
       
         
           <div class="note default"><p>本文是我折腾Hexo Next主题的一些心得，有些坑，真的是不踩不知道，一踩要踩一天TmT。这里我总结一下，让后来人站在我这个巨人的肩膀上 =v =嘎嘎。</p></div>
-<p>&emsp;&emsp;首先，如果对<code>Hexo</code>一无所知，不知道是个什么东西的，出门左转 -&gt; <a href="https://hexo.io/zh-cn/docs/index.html" target="_blank" rel="noopener">Hexo 官方文档</a>。<br>我稍微解释一下Hexo到底是什么吧，因为我刚开始接触到，好多文档都没说它到底有个卵用，就开始长篇大论了，这让我搞了好久才知道Hexo到底有啥用，我为啥要用。Hexo其实可以理解为一个Html生成器，给不会前端(html)或者想快速搭建自己博客的人提供。<br>你只需在Hexo提供的工程目录下的配置文件里配置一些参数，以及通过markdown语法写下自己的博文，Hexo就帮你负责生成相应的Html和js，这样你就可以只关心自己博客该如何写，而用考虑其他琐事(如何 html怎么写，css怎么写之类的)。<br>&emsp;&emsp;那你可能又问为啥不用csdn 或者掘金之类的网站提供的博客功能。我的回答就是因为这样显得很装B，哈哈，说好听点，就是感觉比较 geek！额，扯远了，当你看完Hexo的官方文档，你对Hexo有个大概了解，以及如何基本操作后，你可以看看<code>Next</code>主题，出门右转 -&gt; <a href="http://theme-next.iissnan.com/" target="_blank" rel="noopener">Next 官方文档</a>。<br>&emsp;&emsp;废话讲完，进入踩坑细节。接下来的内容是建立在Hexo文档以及Next文档都已经了解的情况下写的。<br>
+<p>&emsp;&emsp;首先，如果对<code>Hexo</code>一无所知，不知道是个什么东西的，出门左转 -&gt; <a href="https://hexo.io/zh-cn/docs/index.html" target="_blank" rel="noopener">Hexo 官方文档</a>。<br>我稍微解释一下Hexo到底是什么吧，网上好多文档都没说它到底有个卵用，就开始长篇大论了，这让我搞了好久都不知道Hexo到底有啥用，我为啥要用。Hexo其实可以理解为一个Html生成器，给不会前端(html)或者想快速搭建自己博客的人提供。<br>你只需在Hexo提供的工程目录下的配置文件里配置一些参数，以及通过markdown语法写下自己的博文，Hexo就帮你负责生成相应的Html和js，这样你就可以只关心自己博客该如何写，而不用考虑其他琐事(如何 html怎么写，css怎么写之类的)。<br>&emsp;&emsp;那你可能又问为啥不用csdn 或者掘金之类的网站提供的博客功能。我的回答就是因为这样显得很装B，哈哈，说好听点，就是感觉比较 geek！额，扯远了，当你看完Hexo的官方文档，你对Hexo有个大概了解，以及如何基本操作后，你可以看看<code>Next</code>主题，出门右转 -&gt; <a href="http://theme-next.iissnan.com/" target="_blank" rel="noopener">Next 官方文档</a>。<br>&emsp;&emsp;废话讲完，进入踩坑细节。接下来的内容是建立在Hexo文档以及Next文档都已经了解的情况下写的。<br>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2018/02/26/hexo-next-1/#more" rel="contents">
