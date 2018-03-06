@@ -110,14 +110,14 @@
 <meta name="description" content="&amp;emsp;&amp;emsp;最近工作中碰到了一些elasticsearch聚合的问题。明明sql都会写，但是数据导入es里之后，就不知道怎么写Query DSL取出来TmT,有木有。在这里记录一下,并整理出一个例子，供大家直接上手尝试。">
 <meta name="keywords" content="elasticsearch Aggregations">
 <meta property="og:type" content="article">
-<meta property="og:title" content="谈谈Elasticsearch聚合之如何&quot;group by&quot;与&quot;having&quot;">
-<meta property="og:url" content="http://yewennuan.com/2018/03/05/谈谈Elasticsearch聚合之如何"grouby"与"having"/index.html">
+<meta property="og:title" content="谈谈Elasticsearch聚合之如何group by与having">
+<meta property="og:url" content="http://yewennuan.com/2018/03/06/elasticsearch1/index.html">
 <meta property="og:site_name" content="努安">
 <meta property="og:description" content="&amp;emsp;&amp;emsp;最近工作中碰到了一些elasticsearch聚合的问题。明明sql都会写，但是数据导入es里之后，就不知道怎么写Query DSL取出来TmT,有木有。在这里记录一下,并整理出一个例子，供大家直接上手尝试。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-03-05T16:00:00.000Z">
+<meta property="og:updated_time" content="2018-03-06T06:11:09.305Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="谈谈Elasticsearch聚合之如何&quot;group by&quot;与&quot;having&quot;">
+<meta name="twitter:title" content="谈谈Elasticsearch聚合之如何group by与having">
 <meta name="twitter:description" content="&amp;emsp;&amp;emsp;最近工作中碰到了一些elasticsearch聚合的问题。明明sql都会写，但是数据导入es里之后，就不知道怎么写Query DSL取出来TmT,有木有。在这里记录一下,并整理出一个例子，供大家直接上手尝试。">
 
 
@@ -125,10 +125,10 @@
 
 
 
-  <link rel="canonical" href="http://yewennuan.com/2018/03/05/谈谈Elasticsearch聚合之如何"grouby"与"having"/"/>
+  <link rel="canonical" href="http://yewennuan.com/2018/03/06/elasticsearch1/"/>
 
 
-  <title>谈谈Elasticsearch聚合之如何"group by"与"having" | 努安</title>
+  <title>谈谈Elasticsearch聚合之如何group by与having | 努安</title>
   
 
 
@@ -331,7 +331,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yewennuan.com/2018/03/05/谈谈Elasticsearch聚合之如何"grouby"与"having"/">
+    <link itemprop="mainEntityOfPage" href="http://yewennuan.com/2018/03/06/elasticsearch1/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="nuan">
@@ -348,7 +348,7 @@
 
         
         
-          <h2 class="post-title" itemprop="name headline">谈谈Elasticsearch聚合之如何"group by"与"having"</h2>
+          <h2 class="post-title" itemprop="name headline">谈谈Elasticsearch聚合之如何group by与having</h2>
         
 
         <div class="post-meta">
@@ -360,7 +360,7 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-05T00:00:00+08:00">2018-03-05</time>
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-06T00:00:00+08:00">2018-03-06</time>
             
 
             
@@ -396,9 +396,9 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2018/03/05/谈谈Elasticsearch聚合之如何"grouby"与"having"/#comments" itemprop="discussionUrl">
+                <a href="/2018/03/06/elasticsearch1/#comments" itemprop="discussionUrl">
                   <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2018/03/05/谈谈Elasticsearch聚合之如何"grouby"与"having"/" itemprop="commentCount"></span>
+                        data-disqus-identifier="2018/03/06/elasticsearch1/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -406,7 +406,7 @@
 
           
           
-             <span id="/2018/03/05/谈谈Elasticsearch聚合之如何"grouby"与"having"/" class="leancloud_visitors" data-flag-title="谈谈Elasticsearch聚合之如何"group by"与"having"">
+             <span id="/2018/03/06/elasticsearch1/" class="leancloud_visitors" data-flag-title="谈谈Elasticsearch聚合之如何group by与having">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -857,9 +857,9 @@
   
     <script type="text/javascript">
       var disqus_config = function () {
-        this.page.url = 'http://yewennuan.com/2018/03/05/谈谈Elasticsearch聚合之如何"grouby"与"having"/';
-        this.page.identifier = '2018/03/05/谈谈Elasticsearch聚合之如何"grouby"与"having"/';
-        this.page.title = '谈谈Elasticsearch聚合之如何\"group by\"与\"having\"';
+        this.page.url = 'http://yewennuan.com/2018/03/06/elasticsearch1/';
+        this.page.identifier = '2018/03/06/elasticsearch1/';
+        this.page.title = '谈谈Elasticsearch聚合之如何group by与having';
       };
       function loadComments () {
         var d = document, s = d.createElement('script');
