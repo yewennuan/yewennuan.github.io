@@ -8,7 +8,7 @@
     <lastmod>2018-03-05T16:00:00.000Z</lastmod>
     <data>
         <display>
-        <title>谈谈Elasticsearch聚合之如何"grouby"与"having"</title>
+        <title>谈谈Elasticsearch聚合之如何"group by"与"having"</title>
         <pubTime>2018-03-04T16:00:00.000Z</pubTime>
         
         <tag>elasticsearch Aggregations</tag>
