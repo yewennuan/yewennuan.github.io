@@ -438,7 +438,7 @@
         
           
             <div class="note default"><p>&emsp;&emsp;去搬瓦工买了台vps,额只当作shadowSocks的server端，有点浪费。就打算把我爬虫用到的数据库直接装到服务器上。</p></div>
-<p>&emsp;&emsp;老实说网上教程很多，我比较了一下，最终选了一篇内容看着比较详细靠谱也是<a href="https://www.cnblogs.com/lzj0218/p/5724446.html" target="_blank" rel="noopener">centOS6 x86装mysql5.7的博文</a>（下篇用到这篇文章的地方直接简称 <code>博文</code>），这里就简单记录一下安装过程中碰到的一些坑或者注意事项</p>
+<p>&emsp;&emsp;本来想用docker…想想这超级低配主机还是别这么花里胡哨，老老实实传统方法安装好了。网上教程很多，我比较了一下，最终选了一篇内容看着比较详细靠谱也是<a href="https://www.cnblogs.com/lzj0218/p/5724446.html" target="_blank" rel="noopener">centOS6 x86装mysql5.7的博文</a>（下篇用到这篇文章的地方直接简称 <code>博文</code>），这里就简单记录一下安装过程中碰到的一些坑或者注意事项</p>
 <ul>
 <li>centOS 选择 yum 安装rpm包是方便的方法之一,很多教程直接写死了 wget xxx某个版本的rpm包。其实应该根据<code>操作系统</code>选择最合适自己的包，<a href="https://dev.mysql.com/downloads/repo/yum/" target="_blank" rel="noopener">官网 yum下载地址</a>,比如我就是centos6所以我选<img src="/uploads/WX20180308-173315@2x.png" alt="图片"></li>
 <li><p>mysql5.7 默认需要复杂的密码(密码必须符合长度要求，且必须含有数字，小写或大写字母，特殊字符),如想想使用简单密码，则可以改变mysql全局变量</p>
