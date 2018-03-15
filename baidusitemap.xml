@@ -4,6 +4,30 @@
 
     
   <url>
+    <loc>http://yewennuan.com/2018/03/15/mysql-1/</loc>
+    <lastmod>2018-03-15T05:14:20.852Z</lastmod>
+    <data>
+        <display>
+        <title>获取mysql某个库里面，每张表里每个字段为空的数量，占这张表总数的比例</title>
+        <pubTime>2018-03-14T16:00:00.000Z</pubTime>
+        
+        <tag>mysql</tag>
+         
+        <tag>group_concat</tag>
+         
+        <tag>mysql script</tag>
+         
+         
+           
+             
+              <breadCrumb title="mysql" url="http://yewennuan.com/categories/mysql/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://yewennuan.com/2018/03/08/centos6%E8%A3%85mysql5.7/</loc>
     <lastmod>2018-03-08T10:05:09.099Z</lastmod>
     <data>
@@ -77,26 +101,6 @@
 
     
   <url>
-    <loc>http://yewennuan.com/2018/02/26/hexo-next-1/</loc>
-    <lastmod>2018-02-27T16:00:00.000Z</lastmod>
-    <data>
-        <display>
-        <title>Hexo Next折腾记录</title>
-        <pubTime>2018-02-25T16:00:00.000Z</pubTime>
-        
-        <tag>Hexo</tag>
-         
-         
-           
-             
-              <breadCrumb title="Hexo" url="http://yewennuan.com/categories/Hexo/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
     <loc>http://yewennuan.com/2018/02/27/nifi-1/</loc>
     <lastmod>2018-02-27T16:00:00.000Z</lastmod>
     <data>
@@ -110,6 +114,26 @@
            
              
               <breadCrumb title="NIFI" url="http://yewennuan.com/categories/NIFI/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://yewennuan.com/2018/02/26/hexo-next-1/</loc>
+    <lastmod>2018-02-27T16:00:00.000Z</lastmod>
+    <data>
+        <display>
+        <title>Hexo Next折腾记录</title>
+        <pubTime>2018-02-25T16:00:00.000Z</pubTime>
+        
+        <tag>Hexo</tag>
+         
+         
+           
+             
+              <breadCrumb title="Hexo" url="http://yewennuan.com/categories/Hexo/"/>
           
         </display>
     </data>

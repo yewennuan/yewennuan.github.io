@@ -1,6 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[获取mysql某个库里面，每张表里每个字段为空的数量，占这张表总数的比例]]></title>
+    <url>%2F2018%2F03%2F15%2Fmysql-1%2F</url>
+    <content type="text"><![CDATA[&emsp;&emsp;公司购买了某金融公司的数据（存储介质mysql），里面有500多张表。产品经理在做产品时，需要分析500张表里的信息，挖取想要的数据。但很多表里的很多字段都是NULL，比如fund(基金)表里有个net_value(净值)字段，一共有100条数据，有99条数据这个字段为null,则这个字段可靠度不高，产品经理就不会使用这个字段。但500张表，几千个字段，不可能一个个去 where xxx= NULL把,需要脚本批量得出每个字段为空的占比，提高工作效率。下面就开始我的脚本研究心路历程(= =,希望听懂了，我为啥要写这个脚本) &emsp;&emsp;首先要感谢我的好基友DBA小圈圈的大力支持(脚本都是他写，哈哈)。接下来进入正题。要完成 ‘获取mysql某个库里面，每张表里每个字段为空的数量，占这张表总数的比例’这个问题，首先肯定要通过某种便捷方法得到所有的table 以及这个table下的所有filed。额，询问了我的基友，原来sql就是支持的，只是平时对于我这个开发而言都没用到而已。看sql：12SELECT TABLE_SCHEMA,TABLE_NAME,COLUMN_NAMEFROM information_schema.COLUMNS; 结果如下图：&emsp;&emsp;这个sql会把这个mysql实例下所有的schema里的table_name 和column_name一一枚举出来。通过上述sql，我就可以拼接出想要的sql:123SELECT concat('select count(', COLUMN_NAME, ')/count(*) from ', TABLE_SCHEMA, '.', TABLE_NAME)FROM information_schema.COLUMNS; 结果如下图：&emsp;&emsp;额，这样sql的粒度是按字段来，即同一个表如果有8个字段，就会分别执行8条sql，后来我又把粒度改为表级别：1234SELECT concat('select \'',TABLE_NAME,'\' as table_name, ','count(*) as num, ', group_concat(concat('count(', COLUMN_NAME, ')/count(*) as ',COLUMN_NAME)),' from ', TABLE_SCHEMA, '.', TABLE_NAME,';')FROM information_schema.COLUMNS GROUP BY TABLE_SCHEMA, TABLE_NAME; 结果如下图：&emsp;&emsp;这里用到了 group_concat 函数，concat大家多多少都知道，group_concat，看到group应该也理解的差不多了。这里要注意group_concat默认 连接字符串的长度就1024，而我们生成的sql有可能大于1024长度，所以这里要注意，改变这个长度：1SET GROUP_CONCAT_MAX_LEN = 10000000000; &emsp;&emsp;这个只对你当前会话生效，或者直接简单粗暴把global参数修改掉：1SET GLOBAL GROUP_CONCAT_MAX_LEN = 10000000000; &emsp;&emsp;好只剩最后一步了，批量生成好了sql,如何批量执行，并把结果存入文件里呢，直接上脚本：1234mysql -h#&#123;host&#125; -u#&#123;username&#125; -p#&#123;password&#125; -P#&#123;port&#125; -N -e "SET GROUP_CONCAT_MAX_LEN = 10000000000;SELECT concat('select \'',TABLE_NAME,'\' as table_name, ','count(*) as num, ', group_concat(concat('count(', COLUMN_NAME, ')/count(*) as ',COLUMN_NAME)),' from ', TABLE_SCHEMA, '.', TABLE_NAME,';')FROM information_schema.COLUMNSGROUP BY TABLE_SCHEMA, TABLE_NAME;"|mysql -h#&#123;host&#125; -u#&#123;username&#125; -p#&#123;password&#125; -P#&#123;port&#125; -f &gt;result.txt; 结果如图：之后把整个结果粘贴到excel里发送给产品，大功告成： &emsp;&emsp;解释下这条脚本的意思，”|” 符号前是执行sql， -e即执行mysql的sql语句,-f即忽略mysql的错误，继续向下执行。”|”后半句是，执行前面得到的sql,然后将结果输入到result.txt]]></content>
+      <categories>
+        <category>mysql</category>
+      </categories>
+      <tags>
+        <tag>mysql</tag>
+        <tag>group_concat</tag>
+        <tag>mysql script</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[centOS6装mysql5.7]]></title>
     <url>%2F2018%2F03%2F08%2Fcentos6%E8%A3%85mysql5.7%2F</url>
     <content type="text"><![CDATA[&emsp;&emsp;去搬瓦工买了台vps,额只当作shadowSocks的server端，有点浪费。就打算把我爬虫用到的数据库直接装到服务器上。 &emsp;&emsp;本来想用docker…想想这超级低配主机还是别这么花里胡哨，老老实实传统方法安装好了。网上教程很多，我比较了一下，最终选了一篇内容看着比较详细靠谱也是centOS6 x86装mysql5.7的博文（下篇用到这篇文章的地方直接简称 博文），这里就简单记录一下安装过程中碰到的一些坑或者注意事项 centOS 选择 yum 安装rpm包是方便的方法之一,很多教程直接写死了 wget xxx某个版本的rpm包。其实应该根据操作系统选择最合适自己的包，官网 yum下载地址,比如我就是centos6所以我选 mysql5.7 默认需要复杂的密码(密码必须符合长度要求，且必须含有数字，小写或大写字母，特殊字符),如想想使用简单密码，则可以改变mysql全局变量 1mysql&gt; set global validate_password_policy=0; centos6 还未提供 systemctl,所以应该通过 1$ service mysqld start 启动好mysql 发现远程主机访问不了，多半是2个原因: 操作系统自身防火墙问题(自行google) mysql5.7默认是不允许远程主机访问的。解决方案]]></content>
