@@ -492,6 +492,287 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yewennuan.com/2018/03/13/experince/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="nuan">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="努安">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/03/13/experince/" itemprop="url">experience</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-13T00:00:00+08:00">2018-03-13</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/experience/" itemprop="url" rel="index"><span itemprop="name">experience</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/03/13/experince/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2018/03/13/experince/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2018/03/13/experince/" class="leancloud_visitors" data-flag-title="experience">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <div class="note default"><p>收录一些牛客网或者其他网的优质面经，然后我根据自身情况，进行答案的填写。让我们时刻铭记面试套路，想去哪就去哪 &gt;_&lt;</p></div>
+<h1 id="netEase-music-路人A"><a href="#netEase-music-路人A" class="headerlink" title="netEase music(路人A)"></a>netEase music(路人A)</h1><ul>
+<li>介绍一下你自己？<ul>
+<li>我16年毕业于浙工大，然后去了一家做房地产互联网的B轮的公司——销冠科技。从16年年初呆到17年年末，期间经历了整个公司.net转java的技术转型，让我收益颇多。后来去了一家由一批资深阿里员工刚创业的金融公司叫杭州潘帕斯信息科技有限公司。相较于前者，这家公司给我的感觉就是氛围更加工程师化，所用的技术也更加的geek.</li>
+</ul>
+</li>
+<li>公司技术框架选型？<ul>
+<li>主要就是spring全家桶,spring spring-boot spring-mvc等，然后orm框架用的是mybatis。在优化接口以及聚合数据的时候用过reids elasticsearch 等nosql。通过kafka实现缓存的更新，通过dubbo和别的系统进行rpc调用，通过camel进行数据的etl。</li>
+</ul>
+</li>
+<li>redis的数据结构<ul>
+<li>由5中数据结构，分别是 string, set,list zset,hash。和java里的类型很像。</li>
+</ul>
+</li>
+<li>redis的预热，雪崩，击穿,缓存算法<ul>
+<li>之所以使用redis主要是想优化接口的速度，一种是数据聚合接口，即app首页的一些信息，如总成交量，总客户数，认筹，认购，成交数之类。还有一种就是内部组织架构接口，由于开发商层级结构比较多，所以接口速度较慢</li>
+<li>写了个main，直接跑一次，相当于把开发商的聚合接口都手动调用一遍，然后存入redis,失效时间是一个天。后续数据有改动，就在增改的接口上加个注解，然后通过kafka把增改的信息都记录下来，存入topic，通过key做hash让同一个开发商的消息放在一个partition里。然后消费的时候把不同partition里的数据取出来分别放入不同的阻塞队列，并且这个队列会去重，然后在调用对应接口去更新数，并重置失效时间 </li>
+<li>所谓击穿对我来说是不存在的，因为首页的接口，app只需要给我一个token，然后我根据token进行用户校验以及权限校验，如果乱传，则在拦截器里就被拦截掉了，所以不存在击穿。</li>
+<li>雪崩的话，因为我这边的数据实时性要求较高，但是改动又不是很频繁，所以我这边的策略就是将缓存时间设为一个很大的值，然后再加个随机值，然后数据有所改变后，直接发消息到kafka队列，然后写个消费端去更新缓存。</li>
+<li>如果真雪崩，那只能把请求加入队列，不能让mysql挂掉</li>
+<li>FIFO算法:First in First out，先进先出。原则：一个数据最先进入缓存中，则应该最早淘汰掉。也就是说，当缓存满的时候，应当把最先进入缓存的数据给淘汰掉。</li>
+<li>LFU算法：Least Frequently Used，最不经常使用算法。</li>
+<li>LRU算法：Least Recently Used，近期最少使用算法</li>
+</ul>
+</li>
+<li>redis持久化<ul>
+<li>总共有两种方式，分别是 RDB(redis database)以及 AOF(append-only file).</li>
+<li>RDB即redis在n秒内如果有超过m个key被修改，则进行一次数据全量的snapshot，这个操作会单独开个子进程去操作，所以不会对主进程有任何影响。由于是全量，这个持久化的时间间隔不能太短，不然很消耗内存，因此如果中间发生故障，会丢失这个时间段的数据。</li>
+<li>AOF即将”操作+数据”以格式化指令的方式存到文件中，可以理解成相当于 mysql的binlog。由于每次操作都是增量的，所以他可以时间间隔更短的录入。实时，每隔1秒等。如果数据修改操作很频繁，则这个日志文件会很大，所有AOF提供了rewrite机制，即保留当前的数据状态就好。rewrite机制不会重写原来文件，而是将redis里变更的数据，</li>
+</ul>
+</li>
+<li>hashmap java7 和 java 8有啥区别<ul>
+<li>java7:使用一个Entry数组来存储数据，用key的hashcode取模来决定key会被放到数组里的位置，如果hashcode相同，或者hashcode取模后的结果相同（hash collision），那么这些key会被定位到Entry数组的同一个格子里，这些key会形成一个链表。在hashcode特别差的情况下，比方说所有key的hashcode都相同，这个链表可能会很长，那么put/get操作都可能需要遍历这个链表也就是说时间复杂度在最差情况下会退化到O(n)</li>
+<li>java8:使用一个Node数组来存储数据，但这个Node可能是链表结构，也可能是红黑树结构,如果插入的key的hashcode相同，那么这些key也会被定位到Node数组的同一个格子里。如果同一个格子里的key不超过8个，使用链表结构存储。如果超过了8个，那么会调用treeifyBin函数，将链表转换为红黑树。那么即使hashcode完全相同，由于红黑树的特点，查找某个特定元素，也只需要O(log n)的开销。也就是说put/get的操作的时间复杂度最差只有O(log n)</li>
+</ul>
+</li>
+<li><p>j.u.c包下的新建线程池所用的类，为什么推荐用spring里的类</p>
+<ul>
+<li>总共有四种线程池,这四种线程池都是通过ThreadPoolExecutor实现的</li>
+<li>Executors.newCachedThreadPool()：创建一个可缓存线程池，如果线程池长度超过处理需要，可灵活回收空闲线程，若无可回收，则新建线程。（线程最大并发数不可控制）</li>
+<li>Executors.newFixedThreadPool()：创建一个定长线程池，可控制线程最大并发数，超出的线程会在队列中等待。</li>
+<li>Executors.newScheduledThreadPool()：创建一个定长线程池，支持定时及周期性任务执行。</li>
+<li>Executors.newSingleThreadExecutor()：创建一个单线程化的线程池，它只会用唯一的工作线程来执行任务，保证所有任务按照指定顺序(FIFO, LIFO, 优先级)执行。</li>
+<li>ThreadPoolExecutor中比较容易让人误解的是：corePoolSize，maximumPoolSize，workQueue之间关系<ul>
+<li>当线程池小于corePoolSize时，新提交任务将创建一个新线程执行任务，即使此时线程池中存在空闲线程。</li>
+<li>当线程池达到corePoolSize时，新提交任务将被放入workQueue中，等待线程池中任务调度执行</li>
+<li>当workQueue已满，且maximumPoolSize&gt;corePoolSize时，新提交任务会创建新线程执行任务 </li>
+<li>当提交任务数超过maximumPoolSize时，新提交任务由RejectedExecutionHandler处理 </li>
+<li>当线程池中超过corePoolSize线程，空闲时间达到keepAliveTime时，关闭空闲线程 </li>
+<li>当设置allowCoreThreadTimeOut(true)时，线程池中corePoolSize线程空闲时间达到keepAliveTime也将关闭 </li>
+</ul>
+</li>
+<li>推荐用spring的 ThreadPoolTaskExecutor<ul>
+<li>FixedThreadPool 和 SingleThreadPool:允许的请求队列长度为 Integer.MAX_VALUE，可能会堆积大量的请求，从而导致 OOM。 </li>
+<li>CachedThreadPool 和 ScheduledThreadPool:允许的创建线程数量为 Integer.MAX_VALUE，可能会创建大量的线程，从而导致 OOM。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>有过内存溢出调优经历吗</p>
+<ul>
+<li>有过一次，再压测某个接口的时候，oom了，但我接口最后返回给前端的字段就是个位数啊，后来用jvisualvm工具看了一下，发现是rpc调用组织架构接口，返回了很多不必要的数据导致的。调用别人接口要传一个dto，如果dto里什么都不传，则把这个人所有的上级人员信息都返回，因此造成了内存溢出。</li>
+</ul>
+</li>
+<li>mysql聚簇索引，索引类型，哪种索引快，mysql所用数据结构。</li>
+<li>mysql优化经验</li>
+<li><p>说说对dubbo的了解</p>
+<ul>
+<li>dubbo是一个rpc框架，它的整体架构是由5个节点组成的，分别是:<ul>
+<li>provider:暴露服务的服务提供方</li>
+<li>Consumer:调用远程服务的服务消费方</li>
+<li>Registry:服务注册与发现的注册中心</li>
+<li>Monitor:统计服务的调用次数和调用时间的监控中心</li>
+<li>Container:服务运行容器</li>
+</ul>
+</li>
+<li>调用关系说明：<ul>
+<li>服务容器负责启动，加载，运行服务提供者。</li>
+<li>服务提供者在启动时，向注册中心注册自己提供的服务。</li>
+<li>服务消费者在启动时，向注册中心订阅自己所需的服务。</li>
+<li>注册中心返回服务提供者地址列表给消费者，如果有变更，注册中心将基于长连接推送变更数据给消费者。</li>
+<li>服务消费者，从提供者地址列表中，基于软负载均衡算法，选一台提供者进行调用，如果调用失败，再选另一台调用。</li>
+<li>服务消费者和提供者，在内存中累计调用次数和调用时间，定时每分钟发送一次统计数据到监控中心。</li>
+<li><img src="/uploads/WX20180315-161647.png" alt="图片"></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>spring cloud 和 dubbo的区别</p>
+<ul>
+<li>spring cloud 社区更活跃，而dubbo之前公司用的时候，阿里已经放弃维护了</li>
+<li>调用方式 RPC|REST API ,这两种区别意味着，dubbo对服务提供方与调用房接口依赖方式太强了，需要引入jar,很容易产生循环依赖的问题。</li>
+<li>Dubbo只实现了服务治理,而spring cloud覆盖了微服务架构下的方方面面</li>
+<li>服务注册中心 Zookeeper multicast ,redis… | Eureka</li>
+<li>服务跟踪 需自己集成 | spring cloud sleuth</li>
+<li>分布式配置 无 | Spring cloud config</li>
+</ul>
+</li>
+<li>kafka项目里如何保证数据的准确性</li>
+<li>kafka的整个工作过程</li>
+<li>spring boot有什么好处</li>
+<li>最近做的项目介绍一下</li>
+<li>jvm java 7 的和jvm 8 的有啥区别</li>
+<li>说一下jvm</li>
+<li>jvm垃圾回收</li>
+<li>说说elasticsearch的原理</li>
+<li>倒排索引</li>
+<li>http了解吗，说说http报文</li>
+<li>https 和 http的区别</li>
+<li>linux命令找出几分钟里面被修改的文件</li>
+<li>找1-100里的质数</li>
+<li>tcp三次握手和四次挥手</li>
+<li>java8,java9新特性</li>
+<li>设计模式</li>
+<li>说说spring spring-boot,spring-mvc</li>
+<li>算法题</li>
+<li>说说AOP</li>
+<li>cglib asm</li>
+<li>mysql事务隔离级别</li>
+<li>多线程，锁</li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yewennuan.com/2018/03/08/centos6装mysql5.7/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1436,7 +1717,7 @@
       
         
           <div class="note default"><p>本文是我折腾Hexo Next主题的一些心得，有些坑，真的是不踩不知道，一踩要踩一天TmT。这里我总结一下，让后来人站在我这个巨人的肩膀上 =v =嘎嘎。</p></div>
-<p>&emsp;&emsp;首先，如果对<code>Hexo</code>一无所知，不知道是个什么东西的，出门左转 -&gt; <a href="https://hexo.io/zh-cn/docs/index.html" target="_blank" rel="noopener">Hexo 官方文档</a>。<br>我稍微解释一下Hexo到底是什么吧，网上好多文档都没说它到底有个卵用，就开始长篇大论了，这让我搞了好久都不知道Hexo到底有啥用，我为啥要用。Hexo其实可以理解为一个Html生成器，给不会前端(html)或者想快速搭建自己博客的人提供。<br>你只需在Hexo提供的工程目录下的配置文件里配置一些参数，以及通过markdown语法写下自己的博文，Hexo就帮你负责生成相应的Html和js，这样你就可以只关心自己博客该如何写，而不用考虑其他琐事(如何 html怎么写，css怎么写之类的)。<br>&emsp;&emsp;那你可能又问为啥不用csdn 或者掘金之类的网站提供的博客功能。我的回答就是因为这样显得很装B，哈哈，说好听点，就是感觉比较 geek！额，扯远了，当你看完Hexo的官方文档，你对Hexo有个大概了解，以及如何基本操作后，你可以看看<code>Next</code>主题，出门右转 -&gt; <a href="http://theme-next.iissnan.com/" target="_blank" rel="noopener">Next 官方文档</a>。<br>&emsp;&emsp;废话讲完，进入踩坑细节。接下来的内容是建立在Hexo文档以及Next文档都已经了解的情况下写的。<br>
+<p>&emsp;&emsp; 首先，如果对<code>Hexo</code>一无所知，不知道是个什么东西的，出门左转 -&gt; <a href="https://hexo.io/zh-cn/docs/index.html" target="_blank" rel="noopener">Hexo 官方文档</a>。<br>我稍微解释一下Hexo到底是什么吧，网上好多文档都没说它到底有个卵用，就开始长篇大论了，这让我搞了好久都不知道Hexo到底有啥用，我为啥要用。Hexo其实可以理解为一个Html生成器，给不会前端(html)或者想快速搭建自己博客的人提供。<br>你只需在Hexo提供的工程目录下的配置文件里配置一些参数，以及通过markdown语法写下自己的博文，Hexo就帮你负责生成相应的Html和js，这样你就可以只关心自己博客该如何写，而不用考虑其他琐事(如何 html怎么写，css怎么写之类的)。<br>&emsp;&emsp;那你可能又问为啥不用csdn 或者掘金之类的网站提供的博客功能。我的回答就是因为这样显得很装B，哈哈，说好听点，就是感觉比较 geek！额，扯远了，当你看完Hexo的官方文档，你对Hexo有个大概了解，以及如何基本操作后，你可以看看<code>Next</code>主题，出门右转 -&gt; <a href="http://theme-next.iissnan.com/" target="_blank" rel="noopener">Next 官方文档</a>。<br>&emsp;&emsp;废话讲完，进入踩坑细节。接下来的内容是建立在Hexo文档以及Next文档都已经了解的情况下写的。<br>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2018/02/26/hexo-next-1/#more" rel="contents">
